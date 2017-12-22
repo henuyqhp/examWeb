@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.henu.dao.StudentMapper">
+  <resultMap id="BaseResultMap" type="com.henu.pojo.Student">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="sno" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="sname" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="spass" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="ip" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="enable" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="classNum" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="modifyTime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+    </constructor>
+  </resultMap>
+  <resultMap id="examVo" type="com.henu.vo.ExamVo">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+      <arg column="ename" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="type" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="eCreator" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+      <arg column="filename" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="startTime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="endTime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, sno, sname, spass, ip, enable, classNum, modifyTime, createTime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from student
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from student
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.henu.pojo.Student">
+    insert into student (id, sno, sname, 
+      spass, ip, enable, 
+      classNum, modifyTime, createTime
+      )
+    values (null, #{sno,jdbcType=INTEGER}, #{sname,jdbcType=VARCHAR},
+      #{spass,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}, #{enable,jdbcType=INTEGER}, 
+      #{classnum,jdbcType=VARCHAR}, now(), now()
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.henu.pojo.Student">
+    insert into student
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="sno != null">
+        sno,
+      </if>
+      <if test="sname != null">
+        sname,
+      </if>
+      <if test="spass != null">
+        spass,
+      </if>
+      <if test="ip != null">
+        ip,
+      </if>
+      <if test="enable != null">
+        enable,
+      </if>
+      <if test="classnum != null">
+        classNum,
+      </if>
+      <if test="true">
+        modifyTime,
+      </if>
+      <if test="true">
+        createTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="sno != null">
+        #{sno,jdbcType=INTEGER},
+      </if>
+      <if test="sname != null">
+        #{sname,jdbcType=VARCHAR},
+      </if>
+      <if test="spass != null">
+        #{spass,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null">
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="enable != null">
+        #{enable,jdbcType=INTEGER},
+      </if>
+      <if test="classnum != null">
+        #{classnum,jdbcType=VARCHAR},
+      </if>
+      <if test="true">
+        #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="true">
+       now(),
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.henu.pojo.Student">
+    update student
+    <set>
+      <if test="sno != null">
+        sno = #{sno,jdbcType=INTEGER},
+      </if>
+      <if test="sname != null">
+        sname = #{sname,jdbcType=VARCHAR},
+      </if>
+      <if test="spass != null">
+        spass = #{spass,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null">
+        ip = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="enable != null">
+        enable = #{enable,jdbcType=INTEGER},
+      </if>
+      <if test="classnum != null">
+        classNum = #{classnum,jdbcType=VARCHAR},
+      </if>
+      <if test="modifytime != null">
+        modifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createtime != null">
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.henu.pojo.Student">
+    update student
+    set sno = #{sno,jdbcType=INTEGER},
+      sname = #{sname,jdbcType=VARCHAR},
+      spass = #{spass,jdbcType=VARCHAR},
+      ip = #{ip,jdbcType=VARCHAR},
+      enable = #{enable,jdbcType=INTEGER},
+      classNum = #{classnum,jdbcType=VARCHAR},
+      modifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      createTime = #{createtime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+  <select id="checkStudentId" resultType="int" parameterType="com.henu.util.PageData">
+    SELECT count(1) FROM student
+    WHERE id = #{username}
+  </select>
+
+  <select id="selectLogin" parameterType="com.henu.util.PageData" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM student
+    WHERE id = #{username}
+    AND spass = #{password}
+  </select>
+
+  <select id="selectBySname" parameterType="string" resultMap="BaseResultMap">
+    SELECT
+      <include refid="Base_Column_List"/>
+    FROM student
+    WHERE sname = #{sname}
+  </select>
+
+  <select id="selectByIp" parameterType="string" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM student
+    WHERE ip = #{ip} LIMIT 1
+  </select>
+  <update id="updateBySidAndPageData"  parameterType="com.henu.util.PageData" >
+  update student
+  <set>
+    <if test="sno != null">
+      sno = #{sno,jdbcType=INTEGER},
+    </if>
+    <if test="sname != null">
+      sname = #{sname,jdbcType=VARCHAR},
+    </if>
+    <if test="spass != null">
+      spass = #{spass,jdbcType=VARCHAR},
+    </if>
+    <if test="ip != null">
+      ip = #{ip,jdbcType=VARCHAR},
+    </if>
+    <if test="enable != null">
+      enable = #{enable,jdbcType=INTEGER},
+    </if>
+    <if test="classnum != null">
+      classNum = #{classnum,jdbcType=VARCHAR},
+    </if>
+    <if test="modifytime == null">
+      modifyTime = now(),
+    </if>
+  </set>
+    where sno = #{sno,jdbcType=INTEGER}
+  </update>
+
+
+  <select id="findCanUserExam" resultMap="examVo" parameterType="int">
+    select a.id,a.ename,a.type,a.eCreator,a.filename,a.startTime,a.endTime,a.`status`
+    from exam a JOIN binding b ON b.sid = #{userId} and a.`status` != 2 and
+     a.eEnable = 1 and a.filename != '' and b.eid = a.id
+  </select>
+
+  <select id="selectBySno" parameterType="int" resultType="int">
+    SELECT id
+    FROM student
+    WHERE sno = #{sno};
+  </select>
+
+  <select id="selectBySnoStudent" parameterType="int" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM student
+    WHERE sno = #{sno};
+  </select>
+</mapper>

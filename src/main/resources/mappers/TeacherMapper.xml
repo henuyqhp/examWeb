@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.henu.dao.TeacherMapper">
+  <resultMap id="BaseResultMap" type="com.henu.pojo.Teacher">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="tno" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="tname" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="tpass" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="enable" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="tadmin" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="modifyTime" javaType="java.util.Date" jdbcType="TINYINT" />
+      <arg column="createTime" javaType="java.util.Date" jdbcType="TINYINT" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, tno, tname, tpass, enable, tadmin, modifyTime, createTime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from teacher
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from teacher
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.henu.pojo.Teacher">
+    insert into teacher (id, tno, tname, 
+      tpass, enable, tadmin, 
+      modifyTime, createTime)
+    values (#{id,jdbcType=INTEGER}, #{tno,jdbcType=INTEGER}, #{tname,jdbcType=VARCHAR}, 
+      #{tpass,jdbcType=VARCHAR}, #{enable,jdbcType=INTEGER}, #{tadmin,jdbcType=INTEGER}, 
+      now(), now())
+  </insert>
+  <insert id="insertSelective" parameterType="com.henu.pojo.Teacher">
+    insert into teacher
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="tno != null">
+        tno,
+      </if>
+      <if test="tname != null">
+        tname,
+      </if>
+      <if test="tpass != null">
+        tpass,
+      </if>
+      <if test="enable != null">
+        enable,
+      </if>
+      <if test="tadmin != null">
+        tadmin,
+      </if>
+      <if test="modifytime != null">
+        modifyTime,
+      </if>
+      <if test="createtime != null">
+        createTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="tno != null">
+        #{tno,jdbcType=INTEGER},
+      </if>
+      <if test="tname != null">
+        #{tname,jdbcType=VARCHAR},
+      </if>
+      <if test="tpass != null">
+        #{tpass,jdbcType=VARCHAR},
+      </if>
+      <if test="enable != null">
+        #{enable,jdbcType=INTEGER},
+      </if>
+      <if test="tadmin != null">
+        #{tadmin,jdbcType=INTEGER},
+      </if>
+      <if test="modifytime != null">
+        #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.henu.pojo.Teacher">
+    update teacher
+    <set>
+      <if test="tno != null">
+        tno = #{tno,jdbcType=INTEGER},
+      </if>
+      <if test="tname != null">
+        tname = #{tname,jdbcType=VARCHAR},
+      </if>
+      <if test="tpass != null">
+        tpass = #{tpass,jdbcType=VARCHAR},
+      </if>
+      <if test="enable != null">
+        enable = #{enable,jdbcType=INTEGER},
+      </if>
+      <if test="tadmin != null">
+        tadmin = #{tadmin,jdbcType=INTEGER},
+      </if>
+      <if test="modifytime != null">
+        modifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createtime != null">
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.henu.pojo.Teacher">
+    update teacher
+    set tno = #{tno,jdbcType=INTEGER},
+      tname = #{tname,jdbcType=VARCHAR},
+      tpass = #{tpass,jdbcType=VARCHAR},
+      enable = #{enable,jdbcType=INTEGER},
+      tadmin = #{tadmin,jdbcType=INTEGER},
+      modifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      createTime = #{createtime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectLogin" parameterType="com.henu.util.PageData" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM teacher
+    WHERE id = #{username}
+    AND tpass = #{password}
+  </select>
+
+  <select id="checkTeacherId" parameterType="com.henu.util.PageData" resultType="int">
+    select count(1) from teacher
+    where id = #{username}
+  </select>
+  <select id="selectAll" parameterType="com.henu.util.PageData" resultType="int">
+    select * from teacher
+  </select>
+
+  <select id="selectTeacherID" parameterType="com.henu.util.PageData" resultType="int">
+    select * from teacher
+    where id=#{username}
+  </select>
+  <select id="selectTeachermList"  resultMap="BaseResultMap" >
+    SELECT *
+    FROM teacher
+    WHERE enable = 1
+  </select>
+</mapper>

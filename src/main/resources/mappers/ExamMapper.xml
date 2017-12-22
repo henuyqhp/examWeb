@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.henu.dao.ExamMapper">
+  <resultMap id="BaseResultMap" type="com.henu.pojo.Exam">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="ename" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="type" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="eEnable" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="startTime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="endTime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="modifyTime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="eCreator" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="filename" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, ename, type, eEnable, startTime, endTime, modifyTime, createTime, eCreator, status, 
+    filename
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from exam
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByExamName" parameterType="string" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from exam
+    where ename = #{ename}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from exam
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.henu.pojo.Exam">
+    insert into exam (id, ename, type, 
+      eEnable, startTime, endTime, 
+      modifyTime, createTime, eCreator, 
+      status, filename)
+    values (#{id,jdbcType=INTEGER}, #{ename,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{eenable,jdbcType=INTEGER}, #{starttime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}, 
+      now(), now(), #{ecreator,jdbcType=INTEGER},
+      #{status,jdbcType=INTEGER}, #{filename,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.henu.pojo.Exam">
+    insert into exam
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="ename != null">
+        ename,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="eenable != null">
+        eEnable,
+      </if>
+      <if test="starttime != null">
+        startTime,
+      </if>
+      <if test="endtime != null">
+        endTime,
+      </if>
+      <if test="modifytime != null">
+        modifyTime,
+      </if>
+      <if test="createtime != null">
+        createTime,
+      </if>
+      <if test="ecreator != null">
+        eCreator,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="filename != null">
+        filename,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="ename != null">
+        #{ename,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="eenable != null">
+        #{eenable,jdbcType=INTEGER},
+      </if>
+      <if test="starttime != null">
+        #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null">
+        #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifytime != null">
+        #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ecreator != null">
+        #{ecreator,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="filename != null">
+        #{filename,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.henu.pojo.Exam">
+    update exam
+    <set>
+      <if test="ename != null">
+        ename = #{ename,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="eenable != null">
+        eEnable = #{eenable,jdbcType=INTEGER},
+      </if>
+      <if test="starttime != null">
+        startTime = #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null">
+        endTime = #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifytime != null">
+        modifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createtime != null">
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ecreator != null">
+        eCreator = #{ecreator,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="filename != null">
+        filename = #{filename,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.henu.pojo.Exam">
+    update exam
+    set ename = #{ename,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      eEnable = #{eenable,jdbcType=INTEGER},
+      startTime = #{starttime,jdbcType=TIMESTAMP},
+      endTime = #{endtime,jdbcType=TIMESTAMP},
+      modifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      eCreator = #{ecreator,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      filename = #{filename,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="setExamStatus" parameterType="int" >
+    UPDATE exam
+    SET status = #{status}
+    where id = #{id}
+  </update>
+
+  <update id="updateExamFilePath" parameterType="map">
+    UPDATE exam
+    SET filename = #{filepath}
+    where id = #{id}
+  </update>
+
+  <select id="selectExamList"  resultMap="BaseResultMap" >
+    SELECT *
+    FROM exam
+    WHERE eEnable = 1
+  </select>
+
+  <select id="canUseExamSum" parameterType="string" resultType="int">
+    SELECT count(*) FROM
+    student
+    WHERE sno in (
+    SELECT b.sid FROM  exam a JOIN binding b on a.eEnable = 1
+    AND a.ename = #{ename} AND a.id = b.eid
+    )
+  </select>
+
+  <select id="canUseExamLogin" parameterType="string" resultType="int">
+    SELECT count(*) FROM
+    student
+    WHERE sno in (
+    SELECT b.sid FROM  exam a JOIN binding b on a.eEnable = 1
+    AND a.ename = #{ename} AND a.id = b.eid
+    )
+    And ip != ""
+  </select>
+
+  <select id="canUseExamSubmit" parameterType="string" resultType="int">
+    SELECT count(*) FROM
+    log_exam_submit a
+    JOIN exam b
+    on b.ename = #{ename}
+    AND a.eid = b.id
+  </select>
+</mapper>

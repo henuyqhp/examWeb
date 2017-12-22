@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title></title>
+		<link rel="stylesheet" href="../css/bootstrap.min.css" />
+		<script type="text/javascript" src="../js/jquery-1.11.3.js" ></script>
+		<script type="text/javascript" src="../js/bootstrap.js" ></script>
+		<script type="text/javascript" src="../js/app.js"></script>
+		<script>
+			$(function(){
+				$("body").animate({opacity:"1"},1000);
+
+				$.post("/student/lookSubmit.do","",function (data) {
+					if(data.code == 1){
+					    alert(data.username)
+                        $("#name").text(data.username)
+					    $("#showLogSubmit").html("")
+                        if(data.list.length >0 ){
+                            for(var i in data.list){
+                                var item = data.list[i]
+								var filename = item.filename;
+                                var subTime = ToDate2(item.modifytime)
+								var createtime = ToDate2(item.createtime)
+								var table = '<tr><td>'+filename+'</td><td>'+subTime+
+									'</td><td>'+createtime+'</td></tr>'
+								$("#showLogSubmit").append(table)
+							}
+						}else{
+                            $("#showLogSubmit").append("暂无上传")
+						}
+					}
+                })
+			});
+		</script>
+		<style>	
+			*{margin:0;padding:0;}
+			body{opacity: 0;}
+			.container .row .contenTitle{margin-top:80px; margin-bottom:60px; text-align: center; color:#261C12;}
+			.thumbnail .caption .panel .panel-heading{background-color:#261C12; border:1px solid #261C12;}
+			.thumbnail .caption .panel{border:1px solid #261C12;}
+			.thumbnail #imgFile{margin:25px auto;}
+		</style>
+	</head>
+	<body>
+		<div class="contain">
+			<div class="container">
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 contenTitle">
+						<h1><span id="teach">one</span>上机考试中</h1>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6 col-sm-6">
+						<div class="thumbnail">
+				            <img id="imgFile" src="../img/file.png"
+				             alt="通用的占位符缩略图">
+				            <div class="caption">
+				                <div class="panel panel-primary">
+								    <div class="panel-heading">
+								        <h3 class="panel-title">已上传文件列表</h3>
+								    </div>
+								    <div class="panel-body">
+								        <table class="table table-bordered">
+				                            <thead>
+				                                <tr>
+				                                    <th>文件名</th>
+				                                    <th>上传时间</th>
+				                                    <th>创建时间</th>
+				                                </tr>
+				                            </thead>
+				                            <tbody id="showLogSubmit">
+				                            </tbody>
+				                        </table>
+								    </div>
+								</div>
+				            </div>
+				        </div>
+					</div>
+					<div class="col-xs-6 col-sm-6">
+						<div class="thumbnail">
+				            <img src="../img/updown.png"
+				             alt="通用的占位符缩略图">
+				            <div class="caption">
+				                <div class="panel panel-primary">
+								    <div class="panel-heading">
+								        <h3 class="panel-title">答案上传</h3>
+								    </div>
+								    <div class="panel-body">
+								        <p>请按照考试要求将答案文件打包，再次进行上传。同名文件多次上传将会覆盖。
+											请再次确认所提交的答案。
+										</p>
+								    </div>
+								</div>
+				            </div>
+				        </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

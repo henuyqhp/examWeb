@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title></title>
+		<link rel="stylesheet" href="../../css/bootstrap.min.css" />
+		<script type="text/javascript" src="../../js/jquery-1.11.3.js" ></script>
+		<script type="text/javascript" src="../../js/bootstrap.js" ></script>
+		<script>
+			$(function(){
+				$("body").animate({opacity:"1"},1000);
+			})
+		</script>
+		<style>	
+			*{margin:0;padding:0;}
+			body{opacity: 0;}
+			.container .row .contenTitle{margin-top:80px; margin-bottom:60px; text-align: center; color:#261C12;}
+			.thumbnail .caption .panel .panel-heading{background-color:#261C12; border:1px solid #261C12;}
+			.thumbnail .caption .panel{border:1px solid #261C12;}
+			.thumbnail .caption .panel .panel-body ul li{list-style: none;}	
+		</style>
+	</head>
+	<body >
+		<div class="contain">
+			<div class="container">
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 contenTitle">
+						<h1>上机考试管理</h1>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-4">
+						<div class="thumbnail">
+				            <img src="../../img/before.png"
+				             alt="通用的占位符缩略图">
+				            <div class="caption">
+				                <div class="panel panel-primary">
+								    <div class="panel-heading">
+								        <h3 class="panel-title">考前操作</h3>
+								    </div>
+								    <div class="panel-body">
+								        <ul>
+								        	<li>可以新建考试：指定考试名称，开始时间等</li>
+								        	<li>可以编辑自己创建的，从未开始的考试，除了修改考试信息，还可以：上传试卷，学生名单导入，开启考试。</li>
+								        </ul>
+								    </div>
+								</div>
+				            </div>
+				        </div>
+					</div>
+					<div class="col-xs-12 col-sm-4">
+						<div class="thumbnail">
+				            <img src="../../img/teachManage.png"
+				             alt="通用的占位符缩略图">
+				            <div class="caption">
+				                <div class="panel panel-primary">
+								    <div class="panel-heading">
+								        <h3 class="panel-title">考中管理</h3>
+								    </div>
+								    <div class="panel-body">
+								        <ul>
+								        	<li>可以查看考试情况</li>
+								        	<li>可以管理学生信息，手工添加个别学生信息</li>
+								        	<li>可以解除学生登录锁定</li>
+								        	<li>可以添加或删除通知消息</li>
+								        </ul>
+								    </div>
+								</div>
+				            </div>
+				        </div>
+					</div>
+					<div class="col-xs-12 col-sm-4">
+						<div class="thumbnail">
+				            <img src="../../img/after.png"
+				             alt="通用的占位符缩略图">
+				            <div class="caption">
+				                <div class="panel panel-primary">
+								    <div class="panel-heading">
+								        <h3 class="panel-title">考后操作</h3>
+								    </div>
+								    <div class="panel-body">
+								        <ul>
+								        	<li>主考教师（考试创建者）可以结束考试</li>
+								        	<li>主考教师可以打包下载学生提交文件</li>
+								        	<li>主考教师可以导出提交信息</li>
+								        	<li>如果管理员设置，主考教师可以清理和删除考试</li>
+								        </ul>
+								    </div>
+								</div>
+				            </div>
+				        </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
