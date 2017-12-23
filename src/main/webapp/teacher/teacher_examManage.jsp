@@ -71,12 +71,10 @@
 	                    </div>
 	                    <div class="ibox-content">
 	                        <form role="form" class="navbar-form" enctype="multipart/form-data" method="post" >
-	                        	<span>目前设定参加此次考试的学生人数：<i id="studentNum">0</i></span>
 								<label for="excel" class="btn btn-info">浏览</label>
 								<input type="text" id="excel_text" />
 								<input id="excel" name="excel" type="file"
 									   onchange="excel_text.value=excel.value" style="display: none;"/>
-	                            <%--<input id="btn_uploadExcel"  class="btn btn-warning" type="button" value="导入" onclick="doUploadExcel()"/>--%>
 								<button id="btn_uploadExcel" class="btn btn-warning" onclick="doUploadExcel()" type="button">导入</button>
 							</form>
 	                    </div>

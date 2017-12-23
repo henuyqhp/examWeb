@@ -13,6 +13,7 @@ import com.henu.service.teacher.BeforeExamService;
 import com.henu.util.Const;
 import com.henu.util.DateTimeUtil;
 import com.henu.util.PageData;
+import com.henu.util.PageInfo;
 import com.henu.util.enums.Enable;
 import com.henu.util.enums.ExamStatus;
 import com.henu.util.enums.ResponseCode;
@@ -176,6 +177,23 @@ public class BeforeExamServiceImp implements BeforeExamService {
             return ResponseCode.成功;
         }
         return ResponseCode.错误;
+    }
+
+    @Override
+    public List<Exam> slecetByPage(int pageNum) throws Exception {
+        int total = examMapper.selectCount();
+        PageInfo pageInfo = new PageInfo(4,total,pageNum);
+        System.out.println(pageInfo);
+        List<Exam> list= Lists.newArrayList();
+        list = examMapper.selectByPage(pageInfo.getStart(),pageInfo.getPageSize());
+        return list;
+    }
+
+    @Override
+    public PageInfo getPageInfor() throws Exception{
+        int total = examMapper.selectCount();
+        PageInfo pageInfo = new PageInfo(4,total,1);
+        return pageInfo;
     }
 
 

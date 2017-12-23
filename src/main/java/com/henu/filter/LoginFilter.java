@@ -28,38 +28,43 @@ public class LoginFilter implements Filter{
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(Const.USER);
-        System.out.println(1);
         String[] strArray = passUrl.split(";");
-
+        System.out.println(1);
         for (String str : strArray) {
-            System.out.println("parsUrl---------:" + str);
-            System.out.println(request.getRequestURL() + "** "  +(request.getRequestURL().indexOf(passUrl) > 0));
-            System.out.println(request.getRequestURI());
-            System.out.println(request.getServletPath() + "++ " + request.getServletPath().contains(passUrl));
-            if (str.equals(""))
+            System.out.println("/*/");
+            if (str.equals("")){
+                System.out.println("/*/----");
                 continue;
+            }
             if (request.getServletPath().contains(passUrl) || request.getRequestURL().indexOf(passUrl) > 0) {
+                System.out.println("user is null");
                 if (user != null){
-                    if(user.getType() == UserType.教师.getCode() && user.getAdmin() == 0)
+                    if(user.getType() == UserType.教师.getCode() && user.getAdmin() == 0){
+                        System.out.println(2);
                         response.sendRedirect("/teacher/index_teacher.jsp");
-                    else if (user.getType() == UserType.教师.getCode() && user.getAdmin() == 1 ){
+                    }
+                    else if (user.getType() == UserType.管理员.getCode() && user.getAdmin() == 1 ){
+                        System.out.println(3);
                         response.sendRedirect("/admin/index_admin.jsp");
-                    }else{
+                    }else if(user.getType() == UserType.学生.getCode()){
+                        System.out.println(4);
                         response.sendRedirect("/student/index_student.jsp");
                     }
+                    System.out.println(user.toString());
                     return;
                 }
+                System.out.println(5);
                 filterChain.doFilter(request, response);
                 return;
             }
+            System.out.println("//////////////");
         }
-        System.out.println(2);
         try{
             if (user != null){
-                System.out.println(3);
+                System.out.println(6);
                 filterChain.doFilter(servletRequest,servletResponse);
             }else{
-                System.out.println(4);
+                System.out.println(7);
                 response.sendRedirect( "/");
                 return;
             }

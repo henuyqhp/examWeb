@@ -11,6 +11,7 @@
 		<!--<link rel="stylesheet" href="css/style.min862f.css" />-->
 		<script type="text/javascript" src="../js/jquery-1.11.3.js" ></script>
 		<script type="text/javascript" src="../js/bootstrap.js" ></script>
+		<script type="text/javascript" src="https://cdn-hangzhou.goeasy.io/goeasy.js"></script>
 		<style>
 			*{margin:0;padding:0;}
 			nav{font-weight: bold;}
@@ -44,7 +45,15 @@
 				$(".head_right .nav li #studentSubmit").click(function(){
 					$("iframe").attr("src","student_submitlog.html");
 				});
-
+                var goEasy = new GoEasy({
+                    appkey: "BS-bf5e8ab6ac6d4a22bc66a9aba9d8a012"
+                });
+                goEasy.subscribe({
+                    channel: "my_channel",
+                    onMessage: function (message) {
+                        alert("来自老师通知:" + message.content);
+                    }
+                })
 			});
 		</script>
 	</head>

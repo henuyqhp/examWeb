@@ -4,7 +4,7 @@ public enum ExamStatus {
     未开始(0,"unstart"),
     正在进行中(1,"start"),
     考试完成(2,"complete"),
-    考试终止(3,"stop")
+    自动开始(3,"stop")
     ;
 
 

@@ -55,6 +55,7 @@ public class StudentController extends BaseController {
                 System.out.println(session.getId());
                 mv.addObject("username",user.getNo());
                 mv.setViewName( "student/index_student");
+                return mv;
             }
         }
         mv.setViewName("redirect:/");

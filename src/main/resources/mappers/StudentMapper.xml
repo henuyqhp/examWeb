@@ -156,14 +156,14 @@
 
   <select id="checkStudentId" resultType="int" parameterType="com.henu.util.PageData">
     SELECT count(1) FROM student
-    WHERE id = #{username}
+    WHERE sno = #{username}
   </select>
 
   <select id="selectLogin" parameterType="com.henu.util.PageData" resultMap="BaseResultMap">
     SELECT
     <include refid="Base_Column_List"/>
     FROM student
-    WHERE id = #{username}
+    WHERE sno = #{username}
     AND spass = #{password}
   </select>
 

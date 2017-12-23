@@ -12,7 +12,9 @@ import com.henu.service.teacher.BeforeExamService;
 import com.henu.session.SessionSingleBean;
 import com.henu.util.*;
 import com.henu.util.enums.ResponseCode;
+import com.henu.util.enums.UserType;
 import com.henu.vo.User;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,20 +38,17 @@ public class BeforeExamController extends BaseController {
     private BeforeExamService beforeExamService;
     @Autowired
     private FileService fileService;
-    /**
-     * 登录用例
-     * @return
-     */
+
+
     @RequestMapping(value = "examBefore.do")
     public ModelAndView examBefore() {
         ModelAndView mv = this.getModelAndView();
         try {
             List<Exam> list = beforeExamService.examList();
             mv.addObject("list",list);
-
-            PageInfo<Exam> page = new PageInfo<>(list);
+            PageInfo page = beforeExamService.getPageInfor();
             System.out.println(page);
-            System.out.println("访问教师主页");
+            mv.addObject("page",page);
         } catch (Exception e) {
             mv.addObject(Const.CODE,ResponseCode.错误.getCode());
             logger.error(e.toString());
@@ -57,20 +56,30 @@ public class BeforeExamController extends BaseController {
         mv.setViewName("teacher/teacher_examBefore");
         return mv;
     }
-
+    @RequestMapping(value = "selcetByPage.do",method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String,Object> selcetByPage(@Param("pageNum")String pageNum) {
+        Map<String,Object> result = Maps.newHashMap();
+        try {
+            List<Exam> list = beforeExamService.slecetByPage(Integer.parseInt(pageNum));
+            result.put("list",list);
+            result.put(Const.CODE,ResponseCode.成功.getCode());
+        } catch (Exception e) {
+            result.put(Const.CODE,ResponseCode.错误.getCode());
+            logger.error(e.toString());
+        }
+        System.out.println(result);
+        return result;
+    }
 
     @RequestMapping(value = "login.do",method = RequestMethod.POST)
     public String login(){
         PageData pd = this.getPageData();
         try {
-//            boolean islogin = SessionSingleBean.getInstance().checkSession(request,pd.getString("username"));
-//            if (!islogin){
-//                return "redirect:/";
-//            }
             PageData pageData = beforeExamService.login(pd);
             if(pageData.getInt(Const.CODE) == ResponseCode.成功.getCode()){
                 Teacher teacher = (Teacher) pageData.get(Const.USER);
-                User user = new User(teacher);
+                User user = new User(teacher, UserType.教师);
                 System.out.println("sessionId ++++" + session.getId());
                 session.setAttribute(Const.USER,user);
                 System.out.println("成功登录");
@@ -135,8 +144,6 @@ public class BeforeExamController extends BaseController {
 
             PageData pageData1 = beforeExamService.updateExamFilePath(pd.getInt("eid"),url);
             result.putAll(pageData1);
-
-
             System.out.println("-----------------------------");
             System.err.println(targetFileName);
             System.err.println(request.getSession().toString());

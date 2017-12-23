@@ -13,6 +13,16 @@
 			$(function(){
 				$("body").animate({opacity:"1"},1000);
 			});
+			function send() {
+			    var content = $("#content").val();
+				$.post("/teacher/sendInfo.do",{content:content},function (data) {
+					if(data.code == 1){
+					    alert("发送成功")
+					}else{
+					    alert("发送失败，请重新发送")
+					}
+                })
+            }
 		</script>
 		<style>	
 			*{margin:0;padding:0;}
@@ -38,13 +48,13 @@
 	                        <h5>新增通知消息</h5>
 	                    </div>
 	                    <div class="ibox-content">
-	                        <form action="#" method="" role="form" class="form-inline">
+	                        <form role="form" class="form-inline">
 	                            <div class="form-group">
-	                                <label for="message" class="sr-only">学号</label>
-	                                <input type="text" placeholder="通知消息内容" id="message" class="form-control">
+	                                <label for="content" class="sr-only">消息</label>
+	                                <input type="text" placeholder="通知消息内容" id="content" name="content" class="form-control">
 	                            </div>
 	                            <br /><br />
-	                            <button class="btn btn-info" type="submit">添加</button>
+	                            <button class="btn btn-info" onclick="send()">添加</button>
 	                        </form>
 	                    </div>
 	                </div>
@@ -65,7 +75,7 @@
 	                            </thead>
 	                            <tbody>
 	                                <tr>
-	                                    <td>咱么这组最棒</td>
+	                                    <td id="tContent">咱么这组最棒</td>
 	                                </tr>
 	                            </tbody>
 	                        </table>

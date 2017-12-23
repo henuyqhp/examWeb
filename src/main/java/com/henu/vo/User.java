@@ -13,12 +13,12 @@ public class User {
     private String ip;
 
     public User(){}
-    public User(Teacher teacher){
+    public User(Teacher teacher,UserType userType){
         this.id = teacher.getId();
         this.no = teacher.getTno();
-        this.admin = teacher.getTadmin();
+        this.admin = (userType.getCode() == UserType.教师.getCode() ? 0 : 1);
         this.name = teacher.getTname();
-        this.type = teacher.getTadmin() == 0 ? UserType.教师.getCode() : UserType.管理员.getCode();
+        this.type = userType.getCode();
     }
 
     public User(Student student){
@@ -84,5 +84,17 @@ public class User {
 
     public void setIp(String ip) {
         this.ip = ip;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", no=" + no +
+                ", name='" + name + '\'' +
+                ", admin=" + admin +
+                ", type=" + type +
+                ", ip='" + ip + '\'' +
+                '}';
     }
 }

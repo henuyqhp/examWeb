@@ -32,4 +32,9 @@ public interface ExamMapper {
     int canUseExamLogin(String ename);
 
     int canUseExamSubmit(String ename);
+
+    int selectCount();
+
+    List<Exam> selectByPage(@Param("start") int start,@Param("pageSize") int pageSize);
+
 }

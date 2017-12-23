@@ -1,10 +1,14 @@
 package com.henu.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 import java.util.function.BiConsumer;
 
 public class PageData extends HashMap implements Map {
+    private static Logger logger = LoggerFactory.getLogger(PageData.class);
 
     private Map<Object,Object> map ;
     private HttpServletRequest request;
@@ -32,7 +36,6 @@ public class PageData extends HashMap implements Map {
         this.request = request;
         Map<Object,Object> resultMap = new HashMap<>();
         Map properties = request.getParameterMap();
-        System.out.println(properties.size() + "pageData里面的数据----");
         Map.Entry entry;
         String key = "";
         String value = "";
@@ -55,6 +58,7 @@ public class PageData extends HashMap implements Map {
             resultMap.put(key,value);
         }
         map = resultMap;
+        logger.error("pageData数据:{}",map.toString());
     }
 
     @Override

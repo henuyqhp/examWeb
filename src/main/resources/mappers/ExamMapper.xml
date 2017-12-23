@@ -216,4 +216,14 @@
     on b.ename = #{ename}
     AND a.eid = b.id
   </select>
+
+  <select id="selectCount" resultType="int">
+    SELECT count(*) FROM exam
+    WHERE eEnable = 1
+  </select>
+
+  <select id="selectByPage" parameterType="map" resultMap="BaseResultMap">
+    select * from exam where eEnable =1 LIMIT #{start},#{pageSize}
+  </select>
+
 </mapper>

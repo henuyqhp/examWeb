@@ -72,14 +72,13 @@
 					$("iframe").attr("src","teacher_firstPage.html");
 				});
 				$(".head_right .nav li #examBefore").click(function(){
-//					$("iframe").attr("src","teacher_examBefore.jsp")
-                    window.parent.document.getElementById("iframe").contentWindow.location.href = "/teacher/examBefore.do";
+					$("iframe").attr("src","/teacher/examBefore.do")
 				});
 				$(".head_right .nav li #examManage").click(function(){
 					$("iframe").attr("src","teacher_examManage.jsp");
 				});
 				$(".head_right .nav li #examAfter").click(function(){
-					$("iframe").attr("src","teacher_examAfter.html");
+					$("iframe").attr("src","/teacher/examAfter.do");
 				});
 				$(".head_right .nav #exaMdetail").click(function(){
 					$("iframe").attr("src","/teacher/examInformation.do");
@@ -93,9 +92,6 @@
 				$(".head_right .nav #exaMinform").click(function(){
 					$("iframe").attr("src","/teacher/exaMinform.do");
 				});
-                function iframeChange(name) {
-                    window.parent.document.getElementById("iframe").contentWindow.location.href = "/teacher/"+name+".do";
-                }
 
 
                 function myFunction()

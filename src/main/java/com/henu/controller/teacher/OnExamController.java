@@ -9,6 +9,9 @@ import com.henu.util.PageData;
 import com.henu.util.enums.ResponseCode;
 import com.sun.org.apache.regexp.internal.RE;
 import com.sun.org.apache.xpath.internal.operations.Mod;
+import io.goeasy.GoEasy;
+import io.goeasy.publish.GoEasyError;
+import io.goeasy.publish.PublishListener;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -133,16 +136,32 @@ public class OnExamController extends BaseController{
      * 管理通知
      * @return
      */
-    @RequestMapping("sendInfo.do")
+    @RequestMapping(value = "sendInfo.do",method = RequestMethod.POST)
     @ResponseBody
-    public Map<String,Object> sendInfo(){
+    public Map<String,Object> sendInfo(@Param("content")String content){
         Map<String,Object> result = new HashMap<>();
-        PageData pd = this.getPageData();
-
-        //todo 暂时还不知道管理通知需要什么技术
+        GoEasy goEasy = new GoEasy("http://rest-hangzhou.goeasy.io","BC-a3df34e814df4325b235f5b5376b8cc4");
+        goEasy.publish("my_channel",
+                content,
+                new PublishListener(){
+                    @Override
+                    public void onSuccess() {
+                        logger.info("发送成功:{}",content);
+                        result.put(Const.CODE,ResponseCode.成功.getCode());
+                    }
+                    @Override
+                    public void onFailed(GoEasyError error) {
+                        logger.info("发送失败,状态码:{},错误内容:{}",error.getCode(),error.getContent());
+                        result.put(Const.CODE,ResponseCode.成功.getCode());
+                    }
+                });
         return result;
     }
 
+    public static void main(String[] args) {
+
+
+    }
     /**
      * 结束考试
      * @return

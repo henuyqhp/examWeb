@@ -10,6 +10,7 @@ import com.henu.util.Const;
 import com.henu.util.PageData;
 import com.henu.util.PageInfo;
 import com.henu.util.enums.ResponseCode;
+import com.henu.util.enums.UserType;
 import com.henu.vo.User;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.ibatis.annotations.Param;
@@ -42,7 +43,7 @@ public class LoginController extends BaseController{
             List<Teacher> list = adminService.teacherBefore();
             System.out.println("列表"+list);
             mv.addObject("list",list);
-            PageInfo<Teacher> page = new PageInfo<>(list);
+//            PageInfo<Teacher> page = new PageInfo<>(list);
         } catch (Exception e) {
             mv.addObject(Const.CODE,ResponseCode.错误.getCode());
             logger.error(e.toString());
@@ -60,8 +61,8 @@ public class LoginController extends BaseController{
             List<Exam> list = adminService.examBefore();
             System.out.println("列表"+list);
             mv.addObject("list",list);
-            PageInfo<Exam> page = new PageInfo<>(list);
-            System.out.println("列表"+page);
+//            PageInfo<Exam> page = new PageInfo<>(list);
+//            System.out.println("列表"+page);
         } catch (Exception e) {
             e.printStackTrace();
             mv.addObject(Const.CODE,ResponseCode.错误.getCode());
@@ -78,7 +79,7 @@ public class LoginController extends BaseController{
             PageData pageData = adminService.login(pd);
             System.out.println("测试"+pd);
             if(pageData.getInt(Const.CODE) == ResponseCode.成功.getCode()){
-                User user = new User((Teacher) pageData.get(Const.USER));
+                User user = new User((Teacher) pageData.get(Const.USER), UserType.管理员);
                 session.setAttribute(Const.USER,user);
                 return "admin/index_admin";
             }

@@ -82,7 +82,7 @@
 									<%--</tr>--%>
 									<%--</thead>--%>
 								<%--</table>--%>
-	                        <table class="table table-bordered">
+	                        <table class="table table-bordered" id="table">
 	                            <thead>
 	                                <tr>
 	                                    <th>考试名称</th>
@@ -97,30 +97,20 @@
 	                                    <th>可用</th>
 	                                </tr>
 	                            </thead>
-	                            <tbody>
-								<c:choose>
-									<c:when test="${list != null}">
-										<c:forEach var="item" items="${list}">
-											<tr>
-												<td>${item.ename}</td>
-												<td>${item.starttime}</td>
-												<td>${item.endtime}</td>
-												<td>${item.ecreator}</td>
-												<td><button type="button" value="上传试卷" name="upload"/></td>
-												<td><c:if test="${item.status== 1}" ><img src="../img/yes.png"/></c:if></td>
-												<td><c:if test="${item.status== 1}" ><img src="../img/yes.png"/></c:if></td>
-												<td><c:if test="${item.status== 2}" ><img src="../img/yes.png"/></c:if></td>
-												<td><c:if test="${item.status== 3}" ><img src="../img/yes.png"/></c:if></td>
-												<td><c:if test="${item.eenable== 1}" ><img src="../img/yes.png"/></c:if></td>
-											</tr>
-										</c:forEach>
-									</c:when>
-									<c:otherwise>
-										<h2>暂无考试，请添加!</h2>
-									</c:otherwise>
-								</c:choose>
+	                            <tbody id="show">
 	                            </tbody>
 	                        </table>
+									<ul class="pagination">
+										<c:choose>
+											<c:when test="${page != null}">
+												<li><a href="javascript:void(0);" onclick="divide(1)">首页</a></li>
+												<c:forEach var="x" begin="1" end="${page.pages}">
+													<li><a href="javascript:void(0);" onclick="divide(${x})">${x}</a></li>
+												</c:forEach>
+												<li><a href="javascript:void(0);" onclick="divide(${page.pages})">尾页</a></li>
+											</c:when>
+										</c:choose>
+									</ul>
 	                    </div>
 	               </div>
 				</div>
@@ -136,10 +126,10 @@
                 alert("服务器错误")
                 window.parent.top.location.href = "505.html";
             }
+            divide(1)
         });
         function addExam() {
             $.post("/teacher/newExam.do",$("#addExamForm").serialize(),function(data){
-                alert(1)
                 if(data.code == 1){
                   alert("添加成功");
                   $("#addExamForm").submit();
@@ -147,6 +137,33 @@
                   alert("添加失败")
 			  }
             });
+        }
+
+        function divide(pageNum) {
+            $.post('/teacher/selcetByPage.do',{pageNum:pageNum},function (data) {
+				if(data.code == 1){
+                    $("#show").html("")
+                    for(var i in data.list){
+
+                        var ename = data.list[i].ename
+                        var startTime = ToDate2(data.list[i].starttime)
+                        var endtime = ToDate2(data.list[i].endtime)
+                        var ecreator =data.list[i].ecreator
+                        var filename =  data.list[i].filename != null? '<img src="../img/yes.png">':""
+						var status1 = data.list[i].status==3? '<img src="../img/yes.png">':""
+						var status2 = data.list[i].status==1? '<img src="../img/yes.png">':""
+						var status3 = data.list[i].status==2? '<img src="../img/yes.png">':""
+						var status4 = data.list[i].eenable==0? '<img src="../img/yes.png">':""
+                        var status5 = data.list[i].eenable==1? '<img src="../img/yes.png">':""
+                        var table = '<tr><td>'+ename+'</td><td>' + startTime+ '</td><td>' +
+                        endtime+'</td><td>'+ ecreator +'</td><td>'+
+                        filename+ '</td><td>'+ status1+ '</td><td>'+
+                        status2+ '</td><td>'+ status3+ '</td><td>'+ status4+ '</td><td>'+status5+'</td></tr>'
+                        $('#show').append(table)
+
+                    }
+				}
+            })
         }
 	</script>
 </html>
