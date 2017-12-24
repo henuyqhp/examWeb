@@ -8,10 +8,12 @@ import com.henu.util.Const;
 import com.henu.util.PageData;
 import com.henu.util.PageInfo;
 import com.henu.util.enums.ResponseCode;
+import com.henu.vo.User;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -73,12 +75,21 @@ public class AfterExamController extends BaseController {
     }
 
 
-    @RequestMapping("exportInfo.do")
+    @RequestMapping(value = "revise.do",method = RequestMethod.POST)
     @ResponseBody
-    public Map<String,Object> exportInfo(){
+    public Map<String,Object> exportInfo(@Param("oldpass")String oldpass,@Param("newpass")String newpass){
         Map<String,Object> result = new HashMap<>();
-        PageData pd = this.getPageData();
-
+        ResponseCode responseCode;
+        try {
+            User user = (User) session.getAttribute(Const.USER);
+            System.out.println(user);
+            responseCode =  afterExamService.reviseInformation(user.getId(),oldpass,newpass);
+            result.put(Const.CODE,responseCode.getCode());
+        }catch (Exception e){
+            e.printStackTrace();
+//            logger.error("修改密码错误:{}",e);
+            result.put(Const.CODE,ResponseCode.错误.getCode());
+        }
         return result;
     }
 

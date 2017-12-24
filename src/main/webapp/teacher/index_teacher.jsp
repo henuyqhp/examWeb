@@ -92,14 +92,19 @@
 				$(".head_right .nav #exaMinform").click(function(){
 					$("iframe").attr("src","/teacher/exaMinform.do");
 				});
-
-
-                function myFunction()
-                {
-                    alert("ss")
-                    return "您确定退出吗？";
-                }
 			});
+			function revise() {
+				var oldpass = $("#oldpass").val();
+            	var newpass = $("#newpass").val();
+            	$.post("/teacher/revise.do",{oldpass:oldpass,newpass:newpass},function (data) {
+					if(data.code == 1){
+                        alert("修改成功")
+                        $("#myModal").modal("hide")
+					}else{
+					    alert("修改失败")
+					}
+                })
+			}
 		</script>
 	</head>
 	<body  onbeforeunload="return myFunction()">
@@ -130,8 +135,8 @@
 						</ul>
 					</div>
 					<div class="navbar-right">
-							<span class="loginMessage">欢迎你，one！</span>
-							<a data-toggle="modal" data-target="#myModal"><img src="../../img/alter.png" />修改口令</a>
+							<span class="loginMessage">欢迎你</span>
+							<a data-toggle="modal" data-target="#myModal"><img src="../../img/alter.png" />修改密码</a>
 							<a href="/teacher/logout.do"><img src="../../img/exit.png" />退出</a>
 					</div>
 				</div>
@@ -148,20 +153,20 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-						<h3 class="modal-title" id="myModalLabel">修改口令</h3>
+						<h3 class="modal-title" id="myModalLabel">修改密码</h3>
 					</div>
 					<div class="modal-body">
-						<form  role="form" action="#">
+						<form  role="form" >
 			                <div class="form-group">
-			                    <input type="text" class="form-control" placeholder="原口令" required="">
+			                    <input type="text" class="form-control" placeholder="原口令" name="oldpass" id="oldpass">
 			                </div>
 			                <div class="form-group">
-			                    <input type="text" class="form-control" placeholder="新口令" required="">
+			                    <input type="text" class="form-control" placeholder="新口令" required="" name="newpass" id="newpass">
 			                </div>
 			                <div class="form-group">
 			                    <input type="text" class="form-control" placeholder="重输新口令" required="">
 			                </div>
-			                <button type="submit"  class="btn btn-info block full-width m-b">修改</button>
+			                <button   class="btn btn-info block full-width m-b" onclick="revise()">修改</button>
 			            </form>
 					</div>
 				</div>

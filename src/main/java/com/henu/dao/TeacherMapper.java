@@ -22,8 +22,7 @@ public interface TeacherMapper {
 
     int checkTeacherId(PageData pageData);
 
-    int checkTeaxherAll(Teacher teacher);
-
+//    int checkTeaxherAll(Teacher teacher);
 
 
     List<Teacher> selectTeachermList();

@@ -107,12 +107,10 @@
       <if test="tadmin != null">
         tadmin = #{tadmin,jdbcType=INTEGER},
       </if>
-      <if test="modifytime != null">
-        modifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      <if test="modifytime == null">
+        now(),
       </if>
-      <if test="createtime != null">
-        createTime = #{createtime,jdbcType=TIMESTAMP},
-      </if>
+
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -132,13 +130,13 @@
     SELECT
     <include refid="Base_Column_List"/>
     FROM teacher
-    WHERE id = #{username}
+    WHERE tno = #{username}
     AND tpass = #{password}
   </select>
 
   <select id="checkTeacherId" parameterType="com.henu.util.PageData" resultType="int">
     select count(1) from teacher
-    where id = #{username}
+    where tno = #{username}
   </select>
   <select id="selectAll" parameterType="com.henu.util.PageData" resultType="int">
     select * from teacher

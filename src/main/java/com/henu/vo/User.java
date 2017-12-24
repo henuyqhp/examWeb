@@ -11,7 +11,6 @@ public class User {
     private Integer admin;
     private Integer type;
     private String ip;
-
     public User(){}
     public User(Teacher teacher,UserType userType){
         this.id = teacher.getId();
@@ -19,6 +18,7 @@ public class User {
         this.admin = (userType.getCode() == UserType.教师.getCode() ? 0 : 1);
         this.name = teacher.getTname();
         this.type = userType.getCode();
+
     }
 
     public User(Student student){
@@ -86,15 +86,4 @@ public class User {
         this.ip = ip;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", no=" + no +
-                ", name='" + name + '\'' +
-                ", admin=" + admin +
-                ", type=" + type +
-                ", ip='" + ip + '\'' +
-                '}';
-    }
 }
