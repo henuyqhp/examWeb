@@ -6,6 +6,7 @@ import com.henu.pojo.Exam;
 import com.henu.pojo.Student;
 import com.henu.pojo.Teacher;
 import com.henu.service.admin.AdminService;
+import com.henu.service.teacher.BeforeExamService;
 import com.henu.util.Const;
 import com.henu.util.PageData;
 import com.henu.util.PageInfo;
@@ -33,6 +34,8 @@ public class LoginController extends BaseController{
 
     @Autowired
     private AdminService adminService;
+    @Autowired
+    private BeforeExamService beforeExamService;
     static ResultSet resultSet = null;
 
     @RequestMapping(value = "teacherBefore.do")
@@ -44,6 +47,9 @@ public class LoginController extends BaseController{
             System.out.println("列表"+list);
             mv.addObject("list",list);
 //            PageInfo<Teacher> page = new PageInfo<>(list);
+            PageInfo pageInfo = adminService.getPageInfor();
+            System.out.println(pageInfo);
+            mv.addObject("pageInfo",pageInfo);
         } catch (Exception e) {
             mv.addObject(Const.CODE,ResponseCode.错误.getCode());
             logger.error(e.toString());
@@ -52,7 +58,23 @@ public class LoginController extends BaseController{
         return mv;
     }
 
-
+    @RequestMapping(value = "selcetTeacherByPage.do",method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String,Object> selcetTeacherByPage(@Param("pageNum")String pageNum) {
+        Map<String,Object> result = Maps.newHashMap();
+        try {
+            List<Teacher> teacherlist = adminService.slecetByPage(Integer.parseInt(pageNum));
+            result.put("list",teacherlist);
+            System.out.println(teacherlist);
+            result.put(Const.CODE,ResponseCode.成功.getCode());
+        } catch (Exception e) {
+            result.put(Const.CODE,ResponseCode.错误.getCode());
+            System.out.println("失败");
+            logger.error(e.toString());
+        }
+        System.out.println(result);
+        return result;
+    }
     @RequestMapping(value = "examBefore.do")
     public ModelAndView examBefore() {
         ModelAndView mv = this.getModelAndView();
@@ -63,6 +85,9 @@ public class LoginController extends BaseController{
             mv.addObject("list",list);
 //            PageInfo<Exam> page = new PageInfo<>(list);
 //            System.out.println("列表"+page);
+            PageInfo exampageInfo = beforeExamService.getPageInfor();
+            System.out.println(exampageInfo);
+            mv.addObject("exampageInfo",exampageInfo);
         } catch (Exception e) {
             e.printStackTrace();
             mv.addObject(Const.CODE,ResponseCode.错误.getCode());
@@ -71,7 +96,23 @@ public class LoginController extends BaseController{
         mv.setViewName("admin/admin_clear");
         return mv;
     }
-
+    @RequestMapping(value = "selcetExamByPage.do",method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String,Object> selcetExamByPage(@Param("pageNum")String pageNum) {
+        Map<String,Object> result = Maps.newHashMap();
+        try {
+            List<Exam> examlist = adminService.slecetExamByPage(Integer.parseInt(pageNum));
+            result.put("list",examlist);
+            System.out.println(examlist);
+            result.put(Const.CODE,ResponseCode.成功.getCode());
+        } catch (Exception e) {
+            result.put(Const.CODE,ResponseCode.错误.getCode());
+            System.out.println("失败");
+            logger.error(e.toString());
+        }
+        System.out.println(result);
+        return result;
+    }
     @RequestMapping(value = "login.do",method = RequestMethod.POST)
     public String login(){
         PageData pd = this.getPageData();

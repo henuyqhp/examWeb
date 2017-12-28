@@ -151,4 +151,12 @@
     FROM teacher
     WHERE enable = 1
   </select>
+
+  <select id="selectCount" resultType="int">
+    SELECT count(*) FROM teacher
+    WHERE enable = 1
+  </select>
+  <select id="selectByPage" parameterType="map" resultMap="BaseResultMap">
+    select * from teacher where enable =1 LIMIT #{start},#{pageSize}
+  </select>
 </mapper>

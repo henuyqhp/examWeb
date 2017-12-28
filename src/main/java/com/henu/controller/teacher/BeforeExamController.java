@@ -63,6 +63,7 @@ public class BeforeExamController extends BaseController {
         try {
             List<Exam> list = beforeExamService.slecetByPage(Integer.parseInt(pageNum));
             result.put("list",list);
+            System.out.println(list);
             result.put(Const.CODE,ResponseCode.成功.getCode());
         } catch (Exception e) {
             result.put(Const.CODE,ResponseCode.错误.getCode());

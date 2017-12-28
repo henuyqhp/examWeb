@@ -72,16 +72,6 @@
 	                    <div class="ibox-content">
 							<div class="ibox-content">
 
-								<%--<table class="easyui-datagrid" style="width:400px;height:250px"--%>
-									   <%--data-options="url:'/teacher/examList.do:'datagrid_data.json',fitColumns:true,singleSelect:false,method:'post'">--%>
-									<%--<thead>--%>
-									<%--<tr>--%>
-										<%--<th data-options="field:'ename',width:100">ename</th>--%>
-										<%--<th data-options="field:'starttime',width:100">ename</th>--%>
-										<%--<th data-options="field:'endtime',width:100,align:'right'">ename</th>--%>
-									<%--</tr>--%>
-									<%--</thead>--%>
-								<%--</table>--%>
 	                        <table class="table table-bordered" id="table">
 	                            <thead>
 	                                <tr>
@@ -115,7 +105,7 @@
 	               </div>
 				</div>
 			</div>
-		</div>
+			</div>
 		</div>
 	</body>
 	<script type="text/javascript">

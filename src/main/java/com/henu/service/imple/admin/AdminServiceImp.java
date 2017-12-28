@@ -8,6 +8,7 @@ import com.henu.pojo.Teacher;
 import com.henu.service.admin.AdminService;
 import com.henu.util.Const;
 import com.henu.util.PageData;
+import com.henu.util.PageInfo;
 import com.henu.util.enums.Enable;
 import com.henu.util.enums.ResponseCode;
 import com.henu.util.enums.UserType;
@@ -154,6 +155,37 @@ public class AdminServiceImp implements AdminService {
             pageData.put(Const.CODE,ResponseCode.错误.getCode());
         }
         return pageData;
+    }
+
+    @Override
+    public PageInfo getPageInfor() {
+        int total = teacherMapper.selectCount();
+        PageInfo pageInfo = new PageInfo(4,total,1);
+        return pageInfo;
+    }
+
+    @Override
+    public List<Teacher> slecetByPage(int i) {
+        int total = teacherMapper.selectCount();
+        PageInfo pageInfo = new PageInfo(4,total,i);
+        System.out.println(pageInfo);
+        List<Teacher> list= Lists.newArrayList();
+        System.out.println("测试"+pageInfo.getStart()+pageInfo.getPageSize());
+        list = teacherMapper.selectByPage(pageInfo.getStart(),pageInfo.getPageSize());
+
+        return list;
+    }
+
+    @Override
+    public List<Exam> slecetExamByPage(int i) {
+        int total = examMapper.selectCount();
+        PageInfo pageInfo = new PageInfo(4,total,i);
+        System.out.println(pageInfo);
+        List<Exam> list= Lists.newArrayList();
+        System.out.println("测试"+pageInfo.getStart()+pageInfo.getPageSize());
+        list = examMapper.selectByPage(pageInfo.getStart(),pageInfo.getPageSize());
+
+        return list;
     }
 
     @Override

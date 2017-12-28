@@ -1,7 +1,9 @@
 package com.henu.dao;
 
+import com.henu.pojo.Exam;
 import com.henu.pojo.Teacher;
 import com.henu.util.PageData;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -26,4 +28,8 @@ public interface TeacherMapper {
 
 
     List<Teacher> selectTeachermList();
+
+    int selectCount();
+    List<Teacher> selectByPage(@Param("start") int start, @Param("pageSize") int pageSize);
+
 }

@@ -90,7 +90,7 @@
 	                        <h5>教师列表</h5>
 	                    </div>
 	                    <div class="ibox-content">
-	                        <table class="table table-striped">
+	                        <table class="table table-striped" id="table">
 	                            <thead>
 	                                <tr>
 	                                    <th>id</th>
@@ -101,25 +101,20 @@
 	                                </tr>
 	                            </thead>
 
-	                            <tbody>
-									<c:choose>
-										<c:when test="${list != null}">
-											<c:forEach var="item" items="${list}">
-												<tr>
-													<td>${item.id}</td>
-													<td>${item.tno}</td>
-													<td>${item.tname}</td>
-													<td>${item.tadmin}</td>
-
-												</tr>
-											</c:forEach>
-										</c:when>
-										<c:otherwise>
-											<h2>暂无教师，请添加!</h2>
-										</c:otherwise>
-									</c:choose>
-	                            </tbody>
+								<tbody id="show">
+								</tbody>
 	                        </table>
+							<ul class="pagination">
+								<c:choose>
+									<c:when test="${pageInfo != null}">
+										<li><a href="javascript:void(0);" onclick="divide(1)">首页</a></li>
+										<c:forEach var="x" begin="1" end="${pageInfo.pages}">
+											<li><a href="javascript:void(0);" onclick="divide(${x})">${x}</a></li>
+										</c:forEach>
+										<li><a href="javascript:void(0);" onclick="divide(${pageInfo.pages})">尾页</a></li>
+									</c:when>
+								</c:choose>
+							</ul>
 	                    </div>
 	                </div>
 	  			</div>
@@ -139,7 +134,7 @@
 							<button class="btn btn-info" onclick="findTeacher()">查找</button>
 
 							<div class="ibox-content">
-								<table class="table table-bordered">
+								<table class="table table-bordered" >
 									<thead>
 									<tr>
 										<th>id</th>
@@ -153,16 +148,13 @@
 									<tbody id="showTeacherInformation" >
 									</tbody>
 								</table>
+
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-
-		</div>
-
-
 		<div class="modal fade" id="editTeacher" tabindex="-1" role="dialog" aria-labelledby="editTeacherLabel" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
@@ -201,6 +193,7 @@
                 alert("服务器错误")
                 window.parent.top.location.href = "505.html";
             }
+            divide(1)
         });
         function addTeacher() {
             alert("开始添加教师")
@@ -214,8 +207,8 @@
                 }
             });
         }
-            var teinfo
-            function findTeacher() {
+		var teinfo
+		function findTeacher() {
                 $.ajax({
                     type : "POST",
                     url : "/admin/findTeacher.do",
@@ -231,7 +224,7 @@
                             var  Tname = data.teacher.tname
                             var  Tpassword = data.teacher.tpass
                             var table = '<tr><td>'+ id+ '</td><td>'+ Tusername+ '</td>'+ '</td><td>'+ Tname+ '</td>'
-                                + '<td>'+ Tpassword+ '</td><<td><button onclick="a(teinfo)" class="btn btn-info">修改</button></td><td><input type="submit" class="btn btn-info" onclick="delet()" value="删除"></td>/tr>';
+                                + '<td>'+ Tpassword+ '</td><td><button onclick="a(teinfo)" class="btn btn-info">修改</button></td><td><input type="submit" class="btn btn-info" onclick="delet()" value="删除"></td>/tr>';
                             $("#showTeacherInformation").append(table)
                             $("#Tid").attr("value",id)
                             $("#Tusername").attr("value",Tusername)
@@ -251,10 +244,10 @@
             }
 
 
-            function a(s) {
+		function a(s) {
                 $("#editTeacher").modal("show")
             }
-            function editTeacher() {
+		function editTeacher() {
                 $.post("/admin/ReviseTeacher.do",
                     $("#editTeacherForm").serialize(),
                     function (data) {
@@ -282,6 +275,23 @@
                         alert("修改失败")
                     }
                 })
+        }
+        function divide(pageNum) {
+
+            $.post('/admin/selcetTeacherByPage.do',{pageNum:pageNum},function (data) {
+                if(data.code == 1){
+                    $("#show").html("")
+                    for(var i in data.list){
+                        var id = data.list[i].id
+                        var Tusername = data.list[i].tno
+                        var  Tname = data.list[i].tname
+						var Tadmin = data.list[i].tadmin
+                        var table = '<tr><td>'+ id+ '</td><td>'+ Tusername+ '</td>'+ '</td><td>'+ Tname+ '</td>'
+                            + '<td>'+ Tadmin+ '</td></tr>';
+                        $('#show').append(table)
+                    }
+                }
+            })
         }
 	</script>
 </html>

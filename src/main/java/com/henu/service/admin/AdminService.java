@@ -4,6 +4,7 @@ package com.henu.service.admin;
 import com.henu.pojo.Exam;
 import com.henu.pojo.Teacher;
 import com.henu.util.PageData;
+import com.henu.util.PageInfo;
 
 import java.util.List;
 
@@ -25,4 +26,10 @@ public interface AdminService {
     List<Exam> examBefore();
 
     PageData findTeacher(int findTeacherkey);
+
+    PageInfo getPageInfor();
+
+    List<Teacher> slecetByPage(int i);
+
+    List<Exam> slecetExamByPage(int i);
 }
