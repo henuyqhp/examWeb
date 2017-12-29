@@ -7,6 +7,7 @@ import com.henu.pojo.LogExamSubit;
 import com.henu.pojo.Student;
 import com.henu.service.student.StudentService;
 import com.henu.util.Const;
+import com.henu.util.MD5Util;
 import com.henu.util.PageData;
 import com.henu.util.enums.ResponseCode;
 import com.henu.util.enums.UserType;
@@ -27,6 +28,7 @@ public class StudentServiceImp implements StudentService {
     @Override
     public PageData login(PageData pd) {
         PageData pageData = new PageData();
+        pd.put("password", MD5Util.md5(pd.getString("password")));
         Student student = studentMapper.selectLogin(pd);
         if (student == null){
             pageData.put(Const.CODE,ResponseCode.错误.getCode());

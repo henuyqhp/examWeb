@@ -88,10 +88,8 @@
 	                        <h5>开启考试</h5>
 	                    </div>
 	                    <div class="ibox-content">
-	                        <form role="form" class="navbar-form">
 	                        	<span id="exam_file_msg">尚未上传试卷</span>
-								<button id="btn_start"  class="btn btn-info btn-block">开启</button>
-	                        </form>
+								<button id="btn_start" onclick="startExam()" class="btn btn-info btn-block">开启</button>
 	                    </div>
 	                </div>
 	            </div>
@@ -175,6 +173,16 @@
                 $("#btn_start").attr("disabled",true)
                 $("#exam_file_msg").text('尚未上传试卷..');
 			}
+        }
+        function startExam() {
+			var eid = $("#eid").val();
+        	$.post('/teacher/startExam.do',{eid:eid},function (data) {
+				if(data.code == 1){
+				    alert("开启成功")
+				}else{
+				    alert("开启失败")
+				}
+            })
         }
 	</script>
 </html>

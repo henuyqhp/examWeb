@@ -2,6 +2,7 @@ package com.henu.controller.teacher;
 
 import com.henu.controller.base.BaseController;
 import com.henu.pojo.Exam;
+import com.henu.service.FileService;
 import com.henu.service.teacher.AfterExamService;
 import com.henu.service.teacher.BeforeExamService;
 import com.henu.util.Const;
@@ -29,6 +30,8 @@ public class AfterExamController extends BaseController {
     private AfterExamService afterExamService;
     @Autowired
     private BeforeExamService beforeExamService;
+    @Autowired
+    private FileService fileService;
 
     @RequestMapping(value = "examAfter.do")
     public ModelAndView examBefore() {
@@ -65,15 +68,17 @@ public class AfterExamController extends BaseController {
     }
 
 
-    @RequestMapping("downExam.do")
-    @ResponseBody
-    public Map<String,Object> downExam(){
-        Map<String,Object> result = new HashMap<>();
-        PageData pd = this.getPageData();
-
-        return result;
+    @RequestMapping(value="downExam.do")
+    public void downExam(){
+        try {
+            Integer eid = Integer.parseInt(request.getParameter("id"));
+            fileService.downZip(eid,response);
+//            PageData pageData = fileService.download(name,"F:",response);
+//            result.putAll(pageData);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
-
 
     @RequestMapping(value = "revise.do",method = RequestMethod.POST)
     @ResponseBody

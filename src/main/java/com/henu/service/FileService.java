@@ -10,4 +10,6 @@ public interface FileService {
     String upload(MultipartFile file,String path,String remotePath) throws Exception;
 
     PageData download(String name, String path, HttpServletResponse response) throws Exception;
+
+    PageData downZip(Integer eid,HttpServletResponse response) throws Exception;
 }

@@ -1,10 +1,9 @@
-package com.henu.filter;
+package com.henu.listener;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
@@ -14,11 +13,9 @@ import java.util.Hashtable;
 public class SessionSingleListener  implements HttpSessionListener {
     Logger logger = LoggerFactory.getLogger(SessionSingleListener.class);
 
-    //Notification that a session was created
     public void sessionCreated(HttpSessionEvent se) {
     }
 
-    //Notification that a session was invalidated
     public void sessionDestroyed(HttpSessionEvent se) {
         HttpSession session = se.getSession();
         String id = session.getId();

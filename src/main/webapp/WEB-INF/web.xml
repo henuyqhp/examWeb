@@ -46,24 +46,24 @@
     <url-pattern>*.jsp</url-pattern>
   </filter-mapping>
 
-  <filter>
-    <filter-name>sessionSingleFilter</filter-name>
-    <filter-class>com.henu.filter.SessionSingleFilter</filter-class>
+  <!--<filter>-->
+    <!--<filter-name>sessionSingleFilter</filter-name>-->
+    <!--<filter-class>com.henu.listener.SessionSingleFilter</filter-class>-->
 
-  </filter>
-  <filter-mapping>
-    <filter-name>sessionSingleFilter</filter-name>
-    <url-pattern>/teacher/login.do</url-pattern>
-  </filter-mapping>
+  <!--</filter>-->
+  <!--<filter-mapping>-->
+    <!--<filter-name>sessionSingleFilter</filter-name>-->
+    <!--<url-pattern>/teacher/login.do</url-pattern>-->
+  <!--</filter-mapping>-->
   <listener>
     <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
   </listener>
 
   <listener>
-    <listener-class>com.henu.filter.SessionSingleListener</listener-class>
+    <listener-class>com.henu.listener.SessionSingleListener</listener-class>
   </listener>
   <listener>
-    <listener-class>com.henu.filter.ContextSingleListener</listener-class>
+    <listener-class>com.henu.listener.ContextSingleListener</listener-class>
   </listener>
   
   <!-- 将web容器和spring容器整合对的监听器 -->

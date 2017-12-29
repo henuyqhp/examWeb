@@ -78,7 +78,7 @@
 					<div class="navbar-right">
 						<span class="loginMessage">欢迎你，admin！</span>
 						<a data-toggle="modal" data-target="#myModal"><img src="../img/alter.png" />修改口令</a>
-						<a href="../login.jsp"><img src="../img/exit.png" />退出</a>
+						<a href="/admin/logout.do"><img src="../img/exit.png" />退出</a>
 					</div>
 				</div>
 			</nav>

@@ -33,6 +33,7 @@ public class MD5Util {
 
     public static void main(String[] args) {
         System.out.println(md5("31119@qq.com" + "123456"));
-        System.out.println(md5("mappers"));
+//        Integer i = 151012106E9-=
+//        System.out.println(md5("1510121036"));
     }
 }

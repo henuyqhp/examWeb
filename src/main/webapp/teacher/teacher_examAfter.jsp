@@ -47,12 +47,16 @@
 								'</td><td>'+ ecreator +'</td><td>'+
                                 filename+ '</td><td>'+ status1+ '</td><td>'+
                                 status2+ '</td><td>'+ status3+ '</td><td>'+ status4+
-								'</td><td><button class="btn btn-info" onclick="stop('+id+','+pageNum+')">停止考试</button></td></tr>'
+								'</td><td><button class="btn btn-info" style="margin-right: 10px" onclick="stop('+id+','+pageNum+')">停止考试</button>'+
+								'<button class="btn btn-info" onclick="down('+id+')">下载试卷</button></td></tr>'
                             $('#show').append(table)
 
                         }
                     }
                 })
+            }
+            function down(id) {
+                $(location).attr('href', '/teacher/downExam.do?id='+id);
             }
 		</script>
 		<style>	

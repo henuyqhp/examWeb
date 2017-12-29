@@ -106,6 +106,7 @@ public class StudentController extends BaseController {
         Map<String,Object> result = new HashMap<>();
         try {
             name = name.substring(name.lastIndexOf("exam")+5);
+            System.out.println("下载文件" + name);
             PageData pageData = fileService.download(name,"F:",response);
             result.putAll(pageData);
         }catch (Exception e){

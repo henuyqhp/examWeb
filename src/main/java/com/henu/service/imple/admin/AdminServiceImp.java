@@ -7,6 +7,7 @@ import com.henu.pojo.Exam;
 import com.henu.pojo.Teacher;
 import com.henu.service.admin.AdminService;
 import com.henu.util.Const;
+import com.henu.util.MD5Util;
 import com.henu.util.PageData;
 import com.henu.util.PageInfo;
 import com.henu.util.enums.Enable;
@@ -34,6 +35,7 @@ public class AdminServiceImp implements AdminService {
             pageData.put(Const.MSG,"帐号错误");
             return pageData;
         }
+        pd.put("password", MD5Util.md5(pd.getString("password")));
         Teacher teacher = teacherMapper.selectLogin(pd);
         if (teacher == null){
             pageData.put(Const.CODE,ResponseCode.错误.getCode());
@@ -56,7 +58,7 @@ public class AdminServiceImp implements AdminService {
         teacher.setId(pd.getInt("teacherID"));
         teacher.setTno(pd.getInt("teacherNo"));
         teacher.setTname(pd.getString("teacherName"));
-        teacher.setTpass(pd.getString("teacherPassword"));
+        teacher.setTpass(MD5Util.md5(pd.getString("teacherPassword")));
         teacher.setEnable(Enable.可用.getCode());
         teacher.setTadmin(pd.getInt("permission"));
 
@@ -78,7 +80,7 @@ public class AdminServiceImp implements AdminService {
         teacher.setId(pd.getInt("Tid"));
         teacher.setTno(pd.getInt("Tusername"));
         teacher.setTname(pd.getString("Tname"));
-        teacher.setTpass(pd.getString("Tpassword"));
+        teacher.setTpass(MD5Util.md5(pd.getString("Tpassword")));
         teacher.setEnable(Enable.可用.getCode());
 
 

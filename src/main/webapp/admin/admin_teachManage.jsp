@@ -25,6 +25,13 @@
                     document.getElementById("checkID").value = "0";
                 }
             }
+            function isCheck() {
+				if($("#permission").prop("checked")){
+                    $("#permission").val(1)
+				}else{
+                    $("#permission").val(0)
+				}
+            }
 		</script>
 
 
@@ -72,8 +79,8 @@
 	                                <input type="text" placeholder="请输入姓名" id="Name" name="teacherName" class="form-control">
 	                            </div>
 	                            <div class="checkbox m-l m-r-xs">
-									<input type="hidden" name="permission" value="0" >
-	                                <label><input type="checkbox" id="checkID" name="permission" value="1" >管理员</label>
+									<%--<input type="hidden" name="permission" value="0" >--%>
+	                                <label><input type="checkbox" id="permission" name="permission" value="1" checked="true" onclick="isCheck()">管理员</label>
 	                            </div>
 	                            <button class="btn btn-white" onclick="addTeacher()">添加</button>
 
@@ -222,9 +229,9 @@
                             var id = data.teacher.id
                             var Tusername = data.teacher.tno
                             var  Tname = data.teacher.tname
-                            var  Tpassword = data.teacher.tpass
+                            var  admin = data.teacher.tadmin
                             var table = '<tr><td>'+ id+ '</td><td>'+ Tusername+ '</td>'+ '</td><td>'+ Tname+ '</td>'
-                                + '<td>'+ Tpassword+ '</td><td><button onclick="a(teinfo)" class="btn btn-info">修改</button></td><td><input type="submit" class="btn btn-info" onclick="delet()" value="删除"></td>/tr>';
+                                + '<td>'+ admin+ '</td><td><button onclick="a(teinfo)" class="btn btn-info">修改</button></td><td><input type="submit" class="btn btn-info" onclick="delet()" value="删除"></td>/tr>';
                             $("#showTeacherInformation").append(table)
                             $("#Tid").attr("value",id)
                             $("#Tusername").attr("value",Tusername)

@@ -236,5 +236,14 @@ public class LoginController extends BaseController{
     }
 
 
-
+    /**
+     * 退出登录
+     * @return
+     */
+    @RequestMapping(value = "logout.do")
+    public String logout(){
+        System.out.println("销毁的session"+request.getSession().getId());
+        request.getSession().invalidate();
+        return "redirect:/";
+    }
 }

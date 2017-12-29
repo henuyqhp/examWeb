@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 /**
  * FTP服务器
@@ -146,6 +148,71 @@ public class FTPUtil {
 
         logger.info("下载结束，下载结果:{}",result);
         return result;
+    }
+
+
+    public static boolean downZip(String name,HttpServletResponse response){
+        FTPUtil ftpUtil = new FTPUtil(ftpIp,21,ftpUser,ftpPass);
+        logger.info("开始连接FTP服务器");
+        boolean result = ftpUtil.downZip(name,"pub/student",response);
+        logger.info("下载结束，下载结果:{}",result);
+        return result;
+    }
+
+    public boolean downZip(String name,String remotePath,HttpServletResponse response){
+        int reply;
+        if (connectFTP(this.ip,this.port,this.user,this.pwd)){
+            logger.info("开始下载文件：{}",name);
+            try {
+                reply =  ftpClient.getReplyCode();
+                if (!FTPReply.isPositiveCompletion(reply)){
+                    ftpClient.disconnect();
+                    logger.error("下载文件失败");
+                    return false;
+                }
+                ftpClient.changeWorkingDirectory(remotePath);
+                ftpClient.setControlEncoding("UTF-8");
+//                ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);
+                response.reset();
+                response.addHeader("Content-Disposition", "attachment; filename="
+                        + URLEncoder.encode(name, "utf-8")+".zip");
+
+                response.setContentType("application/x-zip-compressed");
+                ServletOutputStream sos = response.getOutputStream();
+                FTPFile[] ftpFiles = ftpClient.listFiles();
+                ZipOutputStream zipos = new ZipOutputStream(new BufferedOutputStream(sos));
+                zipos.setMethod(ZipOutputStream.DEFLATED);
+                int num = 0;
+                for (FTPFile item:ftpFiles){
+                    System.out.println(item.getName());
+                    ZipEntry entry = new ZipEntry(item.getName());
+                    zipos.putNextEntry(entry);
+                    InputStream bis =ftpClient.retrieveFileStream(item.getName());
+                    if (bis != null){
+                        System.out.println(item.getName()+"获取成功");
+                    }else{
+                        System.out.println(item.getName()+"获取失败");
+                    }
+                    if (bis != null){
+                        byte[] b = new byte[100];
+                        int length = 0;
+                        while ((length = bis.read(b)) != -1){
+                            zipos.write(b,0,length);
+                            num += length;
+                        }
+                        bis.close();
+                        ftpClient.getReply();
+                        System.out.println(num + "---");
+                    }
+                }
+                zipos.close();
+                logger.info("FTP服务器文件压缩成功");
+                return true;
+            } catch (IOException e) {
+                logger.error("文件下载错误：{}",e);
+            }
+        }
+        return false;
     }
 
     /**

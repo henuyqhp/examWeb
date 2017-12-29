@@ -211,7 +211,7 @@
 
   <select id="findCanUserExam" resultMap="examVo" parameterType="int">
     select a.id,a.ename,a.type,a.eCreator,a.filename,a.startTime,a.endTime,a.`status`
-    from exam a JOIN binding b ON b.sid = #{userId} and a.`status` != 2 and
+    from exam a JOIN binding b ON b.sid = #{userId} and a.`status` = 1 and
      a.eEnable = 1 and a.filename != '' and b.eid = a.id
   </select>
 
@@ -227,4 +227,12 @@
     FROM student
     WHERE sno = #{sno};
   </select>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM student
+    WHERE enable = 1
+  </select>
+
 </mapper>

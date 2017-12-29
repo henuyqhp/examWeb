@@ -34,4 +34,6 @@ public interface StudentMapper {
     int updateBySidAndPageData(PageData pd);
 
     List<ExamVo> findCanUserExam(Integer userId);
+
+    List<Student> selectAll();
 }
